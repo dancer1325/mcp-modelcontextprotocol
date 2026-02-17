@@ -29,10 +29,7 @@
 
 ![](images/mcp-simple-diagram.png)
 
-- **MCP servers**
-  - allows
-    - 👀connect -- to -- your data sources & tools (_Example:_ Google Drive, Slack, Git, ...)👀
-  - discovered -- by -- AI applicationS
+- [**MCP servers**](docs/learn/server-concepts.md)
 - **MCP clients**
   - run by AI applications (_Examples:_ Claude Desktop, ...)
   - allows
