@@ -1,3 +1,4 @@
 # Specification Enhancement Proposals (SEPs)
 
-See https://modelcontextprotocol.io/community/sep-guidelines
+* [SEP guidelines](../docs/community/sep-guidelines.md)
+* check ALL .md | this path
