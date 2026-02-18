@@ -1,14 +1,21 @@
 ## What is MCP?
 
 * MCP (Model Context Protocol) 
-  * == 💡STANDARD way / AI applications & agents can
-    * connect -- to -- your data sources & tools
-    * work -- with -- your data sources & tools💡
+  * == 💡STANDARD 💡/ 
+    * 👀AI applications & agents can connect -- to -- external systems👀 
+      * external systems ==  
+        * data sources
+          * _Examples:_ local files, databases, repositories
+        * tools
+          * _Examples:_ search engines, calculators
+        * workflows 
+          * _Examples:_ specialized prompts
+    * open-source
   * == adapter -- for -- AI applications
     * _Example:_ == USB-C -- for -- physical devices (use case) 
       * USB-C can connect devices -- to -- various peripherals and accessoriesSimilarly 
-  * allows
-    * 👀easily add connections -- to -- AI applications & agents👀
+  * allows, easily,
+    * 👀add connections -- to -- AI applications & agents👀
       * | BEFORE MCP,
         * you needed to build CUSTOM adapters / EACH data source OR tool 
       * | NOW (with MCP),
@@ -16,10 +23,6 @@
       * _Example:_ == USB-C -- for -- physical devices (use case)
         * BEFORE USB-C,
           * you needed DIFFERENT cables / EACH connection
-
-* _Examples of 
-  * data sources:_ local files, databases, or content repositories
-  * tools:_ GitHub, Google Maps, or Puppeteer
 
 ## How does MCP work?
 
@@ -45,9 +48,6 @@
 
 * MCP servers
   * 👀can provide MORE personalized & contextually relevant assistance👀
-    * Reason: 🧠applications can access your 
-      * Google Drive's personal documents
-      * GitHub codebase🧠  
 
 * _Example:_ AI assistant can
   - read -- connecting, through an MCP server, to your Google Drive -- meeting notes

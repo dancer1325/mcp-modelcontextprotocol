@@ -13,15 +13,18 @@
 
 | Feature       | Explanation                                                                                                                                                                                                                   | Use cases                                                            | Who controls it |
 | ------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------| --------------- |
-| **Tools**     | Functions / your LLM <br/> &nbsp;&nbsp; can actively call <br/> &nbsp;&nbsp; decides when to use them -- based on -- user requests <br> _Examples:_ write \| databases, call external APIs, modify files, trigger other logic | Search flights <br/> Send messages <br/> Create calendar events    | Model           |
-| **Resources** | TODO: Passive data sources that provide read-only access to information for context, such as file contents, database schemas, or API documentation                                                                            | Retrieve documents<br />Access knowledge bases<br />Read calendars   | Application     |
-| **Prompts**   | Pre-built instruction templates that tell the model to work with specific tools and resources                                                                                                                                 | Plan a vacation<br />Summarize my meetings<br />Draft an email       | User            |
+| **Tools**     | Functions / your LLM <br/> &nbsp;&nbsp; can actively call <br/> &nbsp;&nbsp; decides when to use them -- based on -- user requests <br> _Examples:_ write \| databases, call external APIs, modify files, trigger other logic | Search flights <br/> Send messages <br/> Create calendar events      | Model           |
+| **Resources** | Passive data sources / provide read-only access -- to -- information -- for -- context <br/> _Examples:_ file contents, database schemas, or API documentation                                                                | Retrieve documents <br/> Access knowledge bases <br/> Read calendars | Application     |
+| **Prompts**   | Pre-built instruction templates / tell the model to work -- with -- specific tools and resources                                                                                                                              | Plan a vacation <br/> Summarize my meetings <br/> Draft an email     | User            |
 
 ### Tools
 
-Tools enable AI models to perform actions
-* Each tool defines a specific operation with typed inputs and outputs
-* The model requests tool execution based on context.
+* enable 
+  * AI models can perform actions
+* specific operation / typed inputs and outputs
+  * / EACH tool
+* AI models
+  * requests tool execution -- based on -- context
 
 #### How Tools Work
 
@@ -54,35 +57,6 @@ Tools are schema-defined interfaces that LLMs can invoke
   }
 }
 ```
-
-#### Example: Travel Booking
-
-Tools enable AI applications to perform actions on behalf of users
-* In a travel planning scenario, the AI application might use several tools to help book a vacation:
-
-**Flight Search**
-
-```
-searchFlights(origin: "NYC", destination: "Barcelona", date: "2024-06-15")
-```
-
-Queries multiple airlines and returns structured flight options.
-
-**Calendar Blocking**
-
-```
-createCalendarEvent(title: "Barcelona Trip", startDate: "2024-06-15", endDate: "2024-06-22")
-```
-
-Marks the travel dates in the user's calendar.
-
-**Email notification**
-
-```
-sendEmail(to: "team@work.com", subject: "Out of Office", body: "...")
-```
-
-Sends an automated out-of-office message to colleagues.
 
 #### User Interaction Model
 
@@ -127,42 +101,6 @@ Resource Templates include metadata such as title, description, and expected MIM
 | `resources/read`           | Retrieve resource contents      | Resource data with metadata            |
 | `resources/subscribe`      | Monitor resource changes        | Subscription confirmation              |
 
-#### Example: Getting Travel Planning Context
-
-Continuing with the travel planning example, resources provide the AI application with access to relevant information:
-
-- **Calendar data** (`calendar://events/2024`) - Checks user availability
-- **Travel documents** (`file:///Documents/Travel/passport.pdf`) - Accesses important documents
-- **Previous itineraries** (`trips://history/barcelona-2023`) - References past trips and preferences
-
-The AI application retrieves these resources and decides how to process them, whether selecting a subset of data using embeddings or keyword search, or passing raw data directly to the model.
-
-In this case, it provides calendar data, weather information, and travel preferences to the model, enabling it to check availability, look up weather patterns, and reference past travel preferences.
-
-**Resource Template Examples:**
-
-```json
-{
-  "uriTemplate": "weather://forecast/{city}/{date}",
-  "name": "weather-forecast",
-  "title": "Weather Forecast",
-  "description": "Get weather forecast for any city and date",
-  "mimeType": "application/json"
-}
-
-{
-  "uriTemplate": "travel://flights/{origin}/{destination}",
-  "name": "flight-search",
-  "title": "Flight Search",
-  "description": "Search available flights between cities",
-  "mimeType": "application/json"
-}
-```
-
-These templates enable flexible queries
-* For weather data, users can access forecasts for any city/date combination
-* For flights, they can search routes between any two airports
-* When a user has input "NYC" as the `origin` airport and begins to input "Bar" as the `destination` airport, the system can suggest "Barcelona (BCN)" or "Barbados (BGI)".
 
 #### Parameter Completion
 
@@ -207,36 +145,6 @@ Prompts are structured templates that define expected inputs and interaction pat
 | `prompts/list` | Discover available prompts | Array of prompt descriptors           |
 | `prompts/get`  | Retrieve prompt details    | Full prompt definition with arguments |
 
-#### Example: Streamlined Workflows
-
-Prompts provide structured templates for common tasks
-* In the travel planning context:
-
-**"Plan a vacation" prompt:**
-
-```json
-{
-  "name": "plan-vacation",
-  "title": "Plan a vacation",
-  "description": "Guide through vacation planning process",
-  "arguments": [
-    { "name": "destination", "type": "string", "required": true },
-    { "name": "duration", "type": "number", "description": "days" },
-    { "name": "budget", "type": "number", "required": false },
-    { "name": "interests", "type": "array", "items": { "type": "string" } }
-  ]
-}
-```
-
-Rather than unstructured natural language input, the prompt system enables:
-
-1
-* Selection of the "Plan a vacation" template
-2
-* Structured input: Barcelona, 7 days, $3000, ["beaches", "architecture", "food"]
-3
-* Consistent workflow execution based on the template
-
 #### User Interaction Model
 
 Prompts are user-controlled, requiring explicit invocation
@@ -255,56 +163,7 @@ Applications typically expose prompts through various UI patterns such as:
 - Dedicated UI buttons for frequently used prompts
 - Context menus that suggest relevant prompts
 
-## Bringing Servers Together
+## MULTIPLE Servers working together
 
-The real power of MCP emerges when multiple servers work together, combining their specialized capabilities through a unified interface.
-
-### Example: Multi-Server Travel Planning
-
-Consider a personalized AI travel planner application, with three connected servers:
-
-- **Travel Server** - Handles flights, hotels, and itineraries
-- **Weather Server** - Provides climate data and forecasts
-- **Calendar/Email Server** - Manages schedules and communications
-
-#### The Complete Flow
-
-1
-* **User invokes a prompt with parameters:**
-
-   ```json
-   {
-     "prompt": "plan-vacation",
-     "arguments": {
-       "destination": "Barcelona",
-       "departure_date": "2024-06-15",
-       "return_date": "2024-06-22",
-       "budget": 3000,
-       "travelers": 2
-     }
-   }
-   ```
-
-2
-* **User selects resources to include:**
-   - `calendar://my-calendar/June-2024` (from Calendar Server)
-   - `travel://preferences/europe` (from Travel Server)
-   - `travel://past-trips/Spain-2023` (from Travel Server)
-
-3
-* **AI processes the request using tools:**
-
-   The AI first reads all selected resources to gather context - identifying available dates from the calendar, learning preferred airlines and hotel types from travel preferences, and discovering previously enjoyed locations from past trips.
-
-   Using this context, the AI then executes a series of Tools:
-   - `searchFlights()` - Queries airlines for NYC to Barcelona flights
-   - `checkWeather()` - Retrieves climate forecasts for travel dates
-
-   The AI then uses this information to create the booking and following steps, requesting approval from the user where necessary:
-   - `bookHotel()` - Finds hotels within the specified budget
-   - `createCalendarEvent()` - Adds the trip to the user's calendar
-   - `sendEmail()` - Sends confirmation with trip details
-
-**The result:** Through multiple MCP servers, the user researched and booked a Barcelona trip tailored to their schedule
-* The "Plan a Vacation" prompt guided the AI to combine Resources (calendar availability and travel history) with Tools (searching flights, booking hotels, updating calendars) across different servers—gathering context and executing the booking
-* A task that could have taken hours was completed in minutes using MCP.
+* == 👀real power of MCP👀
+  * Reason: 🧠combine servers' specialized capabilities -- through an -- unified interface🧠
